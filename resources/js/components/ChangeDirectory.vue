@@ -58,6 +58,7 @@ export default {
                 .then(response => {
                     console.log(response.data);
                     this.finalPath = response.data;
+                    this.initPath = response.data;
                 })
                 .catch(err => {
                     console.log(err.response.data.message);

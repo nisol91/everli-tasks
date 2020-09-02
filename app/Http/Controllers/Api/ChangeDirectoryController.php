@@ -10,8 +10,8 @@ class ChangeDirectoryController extends Controller
     public $root = '/';
     public $separator = '/';
     public $parent = '..';
-    public $regex = "/^([A-Za-z\/]*)$/";
-
+    public $regexCommand = "/^([A-Za-z]*)$/";
+    public $regexPath = "/^([A-Za-z\/]*)$/";
 
 
     public function cd(Request $request): string
@@ -25,16 +25,18 @@ class ChangeDirectoryController extends Controller
         $command = $request->input('command');
         $currentPath = $data['initPath'];
 
-        if ($this->regexMatch($currentPath) == 0) {
+        if ($this->regexMatch($currentPath, $this->regexPath) == 0) {
             return abort(404, 'regex pattern not match');
         }
 
-
+        // back to root
         if ($command == '') {
             $currentPath = $this->root;
             return $currentPath;
         }
 
+
+        // parent
         if ($command == '..') {
             $currentPathArray = explode($this->separator, $currentPath);
             array_pop($currentPathArray);
@@ -43,6 +45,22 @@ class ChangeDirectoryController extends Controller
             return $newPath;
         }
 
+        // child
+        if ($this->regexMatch($command, $this->regexCommand) == 1) {
+            $currentPathArray = explode($this->separator, $currentPath);
+            array_push($currentPathArray, $command);
+            // dd($currentPathArray);
+            $newPath = implode($this->separator, $currentPathArray);
+            if ($currentPath = $this->root) {
+
+                $newPathCorrected = substr($newPath, 1);
+                return $newPathCorrected;
+            }
+            return $newPath;
+        }
+
+
+        // change directory
         if ($this->patternValidation($command) == false) {
             return abort(404, 'wrong initial pattern');
         }
@@ -55,11 +73,13 @@ class ChangeDirectoryController extends Controller
         return $newPath;
     }
 
-    public function regexMatch(string $pathString): int
+
+    public function regexMatch(string $pathString, $regex): int
     {
-        $match = preg_match($this->regex, $pathString);
+        $match = preg_match($regex, $pathString);
         return $match;
     }
+
     public function patternValidation($command): bool
     {
         if (substr($command, 0, 3) == '../') {

@@ -1966,6 +1966,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         console.log(response.data);
         _this.finalPath = response.data;
+        _this.initPath = response.data;
       })["catch"](function (err) {
         console.log(err.response.data.message);
 
