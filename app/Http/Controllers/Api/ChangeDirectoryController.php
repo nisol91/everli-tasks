@@ -50,11 +50,13 @@ class ChangeDirectoryController extends Controller
             $currentPathArray = explode($this->separator, $currentPath);
             array_push($currentPathArray, $command);
             $newPath = implode($this->separator, $currentPathArray);
-            if ($currentPath = $this->root) {
 
+
+            if ($currentPath == $this->root) {
                 $newPathCorrected = substr($newPath, 1);
                 return $newPathCorrected;
             }
+
             return $newPath;
         }
 
