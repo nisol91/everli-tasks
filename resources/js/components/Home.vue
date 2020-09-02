@@ -1,5 +1,5 @@
 <template>
     <div>
-        Everli Test
+        Everli Test - Nicola Solzi
     </div>
 </template>
