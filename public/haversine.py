@@ -19,23 +19,25 @@ def haversine(lon1, lat1, lon2, lat2):
     r = 6371 # Radius of earth in kilometers. Use 3956 for miles
     return c * r
 
+
+
 locations = [
     	{'id': 1000, 'zip_code': '37069', 'lat': 45.35, 'lng': 10.84},
     	{'id': 1001, 'zip_code': '37121', 'lat': 45.44, 'lng': 10.99},
     	{'id': 1001, 'zip_code': '37129', 'lat': 45.44, 'lng': 11.00},
         {'id': 1001, 'zip_code': '37133', 'lat': 45.43, 'lng': 11.02},
-        {'id': 1000, 'zip_code': '37069', 'lat': 45.35, 'lng': 10.85},
-    	{'id': 1001, 'zip_code': '37121', 'lat': 45.44, 'lng': 10.98},
-    	{'id': 1001, 'zip_code': '37129', 'lat': 45.44, 'lng': 11.01},
-        {'id': 1001, 'zip_code': '37133', 'lat': 45.43, 'lng': 11.03},
-        {'id': 1000, 'zip_code': '37069', 'lat': 45.35, 'lng': 10.82},
-    	{'id': 1001, 'zip_code': '37121', 'lat': 45.44, 'lng': 10.98},
-    	{'id': 1001, 'zip_code': '37129', 'lat': 45.44, 'lng': 11.02},
-        {'id': 1001, 'zip_code': '37133', 'lat': 45.43, 'lng': 11.01},
-        {'id': 1000, 'zip_code': '37069', 'lat': 45.35, 'lng': 10.86},
-    	{'id': 1001, 'zip_code': '37121', 'lat': 45.74, 'lng': 10.97},
-    	{'id': 1001, 'zip_code': '37129', 'lat': 45.44, 'lng': 11.04},
-        {'id': 1001, 'zip_code': '37133', 'lat': 45.43, 'lng': 11.00},
+        # {'id': 1000, 'zip_code': '37069', 'lat': 45.35, 'lng': 10.85},
+    	# {'id': 1001, 'zip_code': '37121', 'lat': 45.44, 'lng': 10.98},
+    	# {'id': 1001, 'zip_code': '37129', 'lat': 45.44, 'lng': 11.01},
+        # {'id': 1001, 'zip_code': '37133', 'lat': 45.43, 'lng': 11.03},
+        # {'id': 1000, 'zip_code': '37069', 'lat': 45.35, 'lng': 10.82},
+    	# {'id': 1001, 'zip_code': '37121', 'lat': 45.44, 'lng': 10.98},
+    	# {'id': 1001, 'zip_code': '37129', 'lat': 45.44, 'lng': 11.02},
+        # {'id': 1001, 'zip_code': '37133', 'lat': 45.43, 'lng': 11.01},
+        # {'id': 1000, 'zip_code': '37069', 'lat': 45.35, 'lng': 10.86},
+    	# {'id': 1001, 'zip_code': '37121', 'lat': 45.74, 'lng': 10.97},
+    	# {'id': 1001, 'zip_code': '37129', 'lat': 45.44, 'lng': 11.04},
+        # {'id': 1001, 'zip_code': '37133', 'lat': 45.43, 'lng': 11.00},
 
     ];
 shoppers = [
@@ -58,21 +60,23 @@ locationsCount = len(locations)
 
 for i in locations:
     for j in shoppers:
-        if haversine(i['lat'], i['lng'], j['lat'], j['lng']) < 10:
-            distancesForShoppers.append({'dist': haversine(i['lat'], i['lng'], j['lat'], j['lng']), 'id': j['id']})
+        if round(float(haversine(i['lng'], i['lat'], j['lng'], j['lat'])), 2) < 10.00:
+            distancesForShoppers.append({'dist': round(float(haversine(i['lng'], i['lat'], j['lng'], j['lat'])), 2), 'id': j['id']})
 
 for i in shoppers:
     count = 0
     for j in distancesForShoppers:
-        if i['id'] == j['id']:
+        if i['id'] == j['id'] and i['enabled'] == True:
             count = count + 1
-    percentage.append({'id': i['id'], 'perc': (count/locationsCount)*100})
+    percentage.append({'shopper_id': i['id'], 'perc': (count/locationsCount)*100})
 
 
 # sortedPercentage = percentage.sorted(percentage.items(), key=lambda x: x[1], reverse=True)
 # sortedPercentage: v for sortedPercentage, v in sorted(percentage.items(), key=lambda item: item[1])
 # print(locationsCount)
 print(distancesForShoppers)
+print('\n')
+print('===================')
 # print(coverage)
 print(percentage)
 print(sortedPercentage)
