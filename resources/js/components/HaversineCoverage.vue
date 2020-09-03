@@ -1,7 +1,7 @@
 <template>
     <div>
-        haversine coverage -- work in progress
-        <!-- <div>{{ result }}</div> -->
+        haversine coverage -- works only locally (docker issues :( )
+        <div>{{ result }}</div>
     </div>
 </template>
 

@@ -38418,7 +38418,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._v("\n    haversine coverage -- work in progress\n    ")
+    _vm._v(
+      "\n    haversine coverage -- works only locally (docker issues :( )\n    "
+    ),
+    _c("div", [_vm._v(_vm._s(_vm.result))])
   ])
 }
 var staticRenderFns = []
