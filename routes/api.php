@@ -19,4 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/changeDirectory', 'Api\ChangeDirectoryController@cd');
-// Route::get('/haversineCoverage', 'Api\HaversineCoverageController');
+Route::get('/haversineCoverage', 'Api\HaversineCoverageController@haversine');
