@@ -16,7 +16,7 @@ class ChangeDirectoryController extends Controller
 
     public function cd(Request $request): string
     {
-
+        //request data validation
         $data = $request->validate(
             [
                 'initPath' => 'required|string|regex:/^([A-Za-z\/]*)$/',
@@ -25,6 +25,7 @@ class ChangeDirectoryController extends Controller
         $command = $request->input('command');
         $currentPath = $data['initPath'];
 
+        // check if the inserted current path is correct
         if ($this->regexMatch($currentPath, $this->regexPath) == 0) {
             return abort(404, 'regex pattern not match');
         }
@@ -62,6 +63,8 @@ class ChangeDirectoryController extends Controller
 
 
         // change directory
+
+        // pattern validation for command
         if ($this->patternValidation($command) == false) {
             return abort(404, 'wrong initial pattern');
         }
@@ -83,9 +86,16 @@ class ChangeDirectoryController extends Controller
 
     public function patternValidation($command): bool
     {
-        if (substr($command, 0, 3) == '../') {
+
+        $firstPart = substr($command, 0, 3);
+        $secondPart = substr($command, 3);
+        if ($firstPart == '../') {
+            if ($this->regexMatch($secondPart, $this->regexCommand) == 0 || $secondPart == '') {
+                return false;
+            }
             return true;
         }
+
         return false;
     }
 }
