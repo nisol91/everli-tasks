@@ -24,6 +24,19 @@ locations = [
     	{'id': 1001, 'zip_code': '37121', 'lat': 45.44, 'lng': 10.99},
     	{'id': 1001, 'zip_code': '37129', 'lat': 45.44, 'lng': 11.00},
         {'id': 1001, 'zip_code': '37133', 'lat': 45.43, 'lng': 11.02},
+        {'id': 1000, 'zip_code': '37069', 'lat': 45.35, 'lng': 10.85},
+    	{'id': 1001, 'zip_code': '37121', 'lat': 45.44, 'lng': 10.98},
+    	{'id': 1001, 'zip_code': '37129', 'lat': 45.44, 'lng': 11.01},
+        {'id': 1001, 'zip_code': '37133', 'lat': 45.43, 'lng': 11.03},
+        {'id': 1000, 'zip_code': '37069', 'lat': 45.35, 'lng': 10.82},
+    	{'id': 1001, 'zip_code': '37121', 'lat': 45.44, 'lng': 10.98},
+    	{'id': 1001, 'zip_code': '37129', 'lat': 45.44, 'lng': 11.02},
+        {'id': 1001, 'zip_code': '37133', 'lat': 45.43, 'lng': 11.01},
+        {'id': 1000, 'zip_code': '37069', 'lat': 45.35, 'lng': 10.86},
+    	{'id': 1001, 'zip_code': '37121', 'lat': 45.74, 'lng': 10.97},
+    	{'id': 1001, 'zip_code': '37129', 'lat': 45.44, 'lng': 11.04},
+        {'id': 1001, 'zip_code': '37133', 'lat': 45.43, 'lng': 11.00},
+
     ];
 shoppers = [
         {'id': 'S1', 'lat': 45.46, 'lng': 11.03, 'enabled': True},
@@ -35,23 +48,32 @@ shoppers = [
         {'id': 'S7', 'lat': 45.34, 'lng': 10.94, 'enabled': True},
     ];
 
-distances = [];
+distancesForShoppers = [];
+coverage = [];
+percentage = [];
 
-sortedElements = [];
+sortedPercentage = [];
+
+locationsCount = len(locations)
 
 for i in locations:
     for j in shoppers:
         if haversine(i['lat'], i['lng'], j['lat'], j['lng']) < 10:
-            distances.append({'dist': haversine(i['lat'], i['lng'], j['lat'], j['lng']), 'id': j['id']})
+            distancesForShoppers.append({'dist': haversine(i['lat'], i['lng'], j['lat'], j['lng']), 'id': j['id']})
 
-# for i in distances:
-#     if i < 10:
-#         sortedElements.append({'distanceCovered': i['dist'], 'id': i['id']})
-        # print(i)
+for i in shoppers:
+    count = 0
+    for j in distancesForShoppers:
+        if i['id'] == j['id']:
+            count = count + 1
+    percentage.append({'id': i['id'], 'perc': (count/locationsCount)*100})
 
-print(distances)
-print(sortedElements)
 
-
-# print(shoppers)
+# sortedPercentage = percentage.sorted(percentage.items(), key=lambda x: x[1], reverse=True)
+# sortedPercentage: v for sortedPercentage, v in sorted(percentage.items(), key=lambda item: item[1])
+# print(locationsCount)
+print(distancesForShoppers)
+# print(coverage)
+print(percentage)
+print(sortedPercentage)
 
