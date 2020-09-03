@@ -14,7 +14,7 @@ class HaversineCoverageController extends Controller
 
 
         // dd(getcwd());
-        $output = shell_exec("python " . getcwd() . "/test.py 2>&1");
+        $output = shell_exec("python3 " . getcwd() . "/test.py 2>&1");
         // dd($output);
         return $output;
     }
