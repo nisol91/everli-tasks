@@ -1998,10 +1998,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      result: {}
+      result: {},
+      loading: true
     };
   },
   created: function created() {
@@ -2010,6 +2012,7 @@ __webpack_require__.r(__webpack_exports__);
     axios.get("/api/haversineCoverage").then(function (response) {
       console.log(response.data);
       _this.result = response.data;
+      _this.loading = false;
     });
   },
   methods: {}
@@ -38422,7 +38425,9 @@ var render = function() {
     _vm._v(
       "\n    haversine coverage -- works only locally (docker issues :( )\n    "
     ),
-    _c("div", [_vm._v(_vm._s(_vm.result))])
+    _vm.loading
+      ? _c("div", [_vm._v("loading........")])
+      : _c("div", [_vm._v(_vm._s(_vm.result))])
   ])
 }
 var staticRenderFns = []
