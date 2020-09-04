@@ -78,6 +78,7 @@ class ChangeDirectoryController extends Controller
     }
 
 
+    // helper methods
     public function regexMatch(string $pathString, $regex): int
     {
         $match = preg_match($regex, $pathString);

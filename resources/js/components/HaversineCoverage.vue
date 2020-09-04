@@ -9,7 +9,7 @@
 export default {
     data() {
         return {
-            result: ""
+            result: {}
         };
     },
     created() {
@@ -17,6 +17,7 @@ export default {
             console.log(response.data);
             this.result = response.data;
         });
-    }
+    },
+    methods: {}
 };
 </script>

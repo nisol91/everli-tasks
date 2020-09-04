@@ -8,6 +8,7 @@ class HaversineCoverageController extends Controller
 {
     public function haversine()
     {
+        // execute python command
         $output = shell_exec("python3 " . getcwd() . "/haversine.py 2>&1");
         return $output;
     }
